@@ -13,26 +13,33 @@ class CanvasPage extends StatefulWidget {
 
 class _CanvasPageState extends State<CanvasPage> {
   Tool _selectedTool = Tool.fontFamily;
-  TextStyle _textStyle = const TextStyle();
+  TextStyle _textStyle = const TextStyle(color: Colors.white);
   TextAlign _textAlign = TextAlign.start;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          InteractiveViewer(
-            child: TextField(),
-          ),
-          Toolbar(
-            selectedTool: _selectedTool,
-            onToolSelected: (tool) => setState(() => _selectedTool = tool),
-          ),
-          SizedBox(
-            height: App.screenHeight * 0.3,
-            child: _getEditor(),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: TextField(
+                  style: _textStyle,
+                ),
+              ),
+            ),
+            Toolbar(
+              selectedTool: _selectedTool,
+              onToolSelected: (tool) => setState(() => _selectedTool = tool),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              height: App.screenHeight * 0.3,
+              child: _getEditor(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -47,7 +54,9 @@ class _CanvasPageState extends State<CanvasPage> {
           },
         );
       case Tool.fontOption:
-        return Container();
+        return Container(
+          color: Colors.blue,
+        );
       default:
         return Container();
     }

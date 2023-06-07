@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_editor_app/app_config/app.dart';
 import 'package:text_editor_app/toolbar/components/toolbar_item.dart';
 import 'package:text_editor_app/toolbar/ui/tool_enum.dart';
 
@@ -16,7 +17,8 @@ class Toolbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 48,
-      child: ListView.builder(
+      child: ListView.separated(
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
         itemCount: Tool.values.length,
         itemBuilder: (context, index) {
@@ -24,9 +26,10 @@ class Toolbar extends StatelessWidget {
           return ToolbarItem(
             onPressed: () => onToolSelected(tool),
             isActive: selectedTool == tool,
-            child: Icon(tool.icon),
+            child: Icon(tool.icon, color: App.theme.indicatorColor),
           );
         },
+        separatorBuilder: (context, index) => const SizedBox(width: 12),
       ),
     );
   }

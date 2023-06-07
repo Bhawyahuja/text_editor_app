@@ -21,24 +21,6 @@ class AppTheme {
       iconTheme: IconThemeData(color: _whiteColor),
     ),
 
-    // text theme
-    textTheme: const TextTheme(
-      titleLarge: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: _whiteColor,
-      ),
-      titleSmall: TextStyle(color: _hintColor, fontSize: 15),
-      bodyMedium: TextStyle(color: _whiteColor),
-      bodySmall: TextStyle(
-        color: _whiteColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-      headlineSmall: TextStyle(
-        color: _whiteColor,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
   );
 }
 

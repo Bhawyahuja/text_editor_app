@@ -12,7 +12,7 @@ class FontFamilyEditor extends StatelessWidget {
   final String? selectedFont;
   final Function(String font) onFontSelected;
 
-  final List<String> _fonts = [];
+  final List<String> _fonts = ["Product Sans"];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,14 @@ class FontFamilyEditor extends StatelessWidget {
               isActive: selectedFont == font,
               height: 40,
               width: App.screenWidth / 4,
-              child: Text(font, style: TextStyle(fontFamily: font)),
+              showBorder: false,
+              child: Text(
+                font,
+                style: TextStyle(
+                  fontFamily: font,
+                  color: App.theme.indicatorColor,
+                ),
+              ),
             ),
           )
           .toList(),
