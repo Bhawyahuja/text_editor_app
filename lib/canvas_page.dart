@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:text_editor_app/app_config/app.dart';
 import 'package:text_editor_app/toolbar/components/font_family_editor.dart';
+import 'package:text_editor_app/toolbar/components/font_option_edior.dart';
 import 'package:text_editor_app/toolbar/ui/tool_enum.dart';
 import 'package:text_editor_app/toolbar/ui/toolbar.dart';
 
@@ -13,8 +15,10 @@ class CanvasPage extends StatefulWidget {
 
 class _CanvasPageState extends State<CanvasPage> {
   Tool _selectedTool = Tool.fontFamily;
-  TextStyle _textStyle = const TextStyle(color: Colors.white);
+  String? fontFamily;
+  TextStyle _textStyle = const TextStyle(color: Colors.black);
   TextAlign _textAlign = TextAlign.start;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,26 @@ class _CanvasPageState extends State<CanvasPage> {
         child: Column(
           children: [
             Expanded(
-              child: Center(
-                child: TextField(
-                  style: _textStyle,
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(_focusNode);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: App.theme.indicatorColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: TextField(
+                    style: _textStyle,
+                    focusNode: _focusNode,
+                    onSubmitted: (value) => _focusNode.unfocus(),
+                    decoration: const InputDecoration.collapsed(
+                      hintText: "Enter text here",
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -48,17 +69,44 @@ class _CanvasPageState extends State<CanvasPage> {
     switch (_selectedTool) {
       case Tool.fontFamily:
         return FontFamilyEditor(
-          selectedFont: _textStyle.fontFamily,
+          selectedFont: fontFamily,
           onFontSelected: (font) {
-            setState(() => _textStyle = _textStyle.copyWith(fontFamily: font));
+            setState(() {
+              fontFamily = font;
+              _textStyle = GoogleFonts.getFont(font, textStyle: _textStyle);
+            });
           },
         );
       case Tool.fontOption:
-        return Container(
-          color: Colors.blue,
+        return FontOptionEditor(
+          bold: _textStyle.fontWeight == FontWeight.bold,
+          italic: _textStyle.fontStyle == FontStyle.italic,
+          underline: _textStyle.decoration == TextDecoration.underline,
+          strikethrough: _textStyle.decoration == TextDecoration.lineThrough,
+          onFontOptionEdited: (bold, italic, underline, strikethrough) {
+            setState(
+              () {
+                _textStyle = _textStyle.copyWith(
+                  fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+                  fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+                  decoration: underline
+                      ? TextDecoration.underline
+                      : strikethrough
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                );
+              },
+            );
+          },
         );
       default:
         return Container();
     }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 }

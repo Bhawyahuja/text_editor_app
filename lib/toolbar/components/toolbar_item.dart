@@ -25,7 +25,7 @@ class ToolbarItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: showBorder ? App.theme.indicatorColor : App.theme.primaryColor,
+          color: showBorder ? App.theme.indicatorColor : Colors.transparent,
         ),
       ),
       color: isActive ? App.theme.primaryColor : App.theme.disabledColor,
