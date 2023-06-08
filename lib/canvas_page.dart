@@ -43,6 +43,8 @@ class _CanvasPageState extends State<CanvasPage> {
                     style: _textStyle,
                     focusNode: _focusNode,
                     onSubmitted: (value) => _focusNode.unfocus(),
+                    maxLines: 4,
+                    textAlign: _textAlign,
                     decoration: const InputDecoration.collapsed(
                       hintText: "Enter text here",
                     ),
@@ -56,7 +58,7 @@ class _CanvasPageState extends State<CanvasPage> {
             ),
             const SizedBox(height: 12),
             SizedBox(
-              height: App.screenHeight * 0.3,
+              height: App.screenHeight * 0.27,
               child: _getEditor(),
             ),
           ],

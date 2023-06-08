@@ -29,7 +29,7 @@ class FontOptionEditor extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 2,
+        mainAxisExtent: 72,
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
       ),
